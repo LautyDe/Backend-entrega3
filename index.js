@@ -31,3 +31,19 @@ app.get("/productos", (req, res) => {
     };
     ejecutar();
 });
+
+app.get("/random", (req, res) => {
+    const ejecutar = async () => {
+        const arrayProductos = await productos.getAll();
+        let numero = Math.floor(Math.random() * arrayProductos.length);
+        let random = [];
+        arrayProductos.map(
+            (item, index) => index === numero && random.push(item)
+        );
+        let card = `<div style="background-color: black; color: white; text-align: center; height: auto; width: 300px"><h2>Nombre: ${random[0].title}</h2> <h3>Precio: ${random[0].price}</h3> <img style="margin-bottom: 10px"height="250px" src="${random[0].thumbnail}"></div>`;
+        res.send(
+            `<h1 style="text-align: center">Producto al azar:</h1><section style="display: flex; justify-content: space-around">${card}</section>`
+        );
+    };
+    ejecutar();
+});
